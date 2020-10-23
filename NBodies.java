@@ -10,8 +10,11 @@ import java.io.FileNotFoundException;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
-public class NBodies extends JPanel{
+public class NBodies extends JPanel implements ActionListener{
 	private String name;
 	private int mass;
 	private int xCoordinate;
@@ -42,14 +45,27 @@ public class NBodies extends JPanel{
 			return this.name;
 		}
 	}
+	//
+	Timer tm= new Timer(5, this);
+	int x=0, velx=2;
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.RED);
-		g.drawOval(100,100,50,50);
-		g.setColor(Color.YELLOW);
-		g.fillOval(100,200,50,50);
+		g.fillOval(x,100,50,50);
+		tm.start();
 	}
+
+	public void actionPerformed(ActionEvent e){
+		if(x<0||x>718){
+			velx= -velx;
+		}
+		x=x+velx;
+		repaint();
+	}
+
+
+
 	public static void main(String[] args){
 		CelestBody p1= new CelestBody("Earth", 20000, 20, 5,16, 3000, 20000);
 		System.out.println(p1.giveName());
@@ -58,7 +74,7 @@ public class NBodies extends JPanel{
 		JFrame jf= new JFrame();
 
 		jf.setTitle("Canvas");
-		jf.setSize(600,400);
+		jf.setSize(768,768);
 		jf.add(t);
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
