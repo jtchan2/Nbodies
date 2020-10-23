@@ -22,6 +22,18 @@ public class NBodies extends JPanel implements ActionListener{
 	private int xDirectVelocity;
 	private int yDirectVelocity;
 	private int bodySize;
+	private List<String[]> content;
+	private List<CelestBody> arrList;
+
+
+	private static class Node<E>{
+		E data;
+		Node<E> next;
+		public Node(E value){
+			data=value;
+			next=null;
+		}
+	}
 
 	private static class CelestBody{
 		private String name;
@@ -63,10 +75,26 @@ public class NBodies extends JPanel implements ActionListener{
 		x=x+velx;
 		repaint();
 	}
+	//stopped here @10:49 10/23 making file reader
+	public NbodyCreator(String fileName) throws IOException{
+		String fileInput= fileName;
+		content= new ArrayList<>();
+		try(BufferedReader read= new BufferedReader(new FileReader(fileInput))){
+
+			String line="";
+			while(line=read.readLine()){
+				content.add(line.split(","));
+			}
+		} catch(Exception e){
+			System.out.println("Error no file found");
+		}
+
+	}
 
 
 
 	public static void main(String[] args){
+		String fileName= "nbody_input.text";
 		CelestBody p1= new CelestBody("Earth", 20000, 20, 5,16, 3000, 20000);
 		System.out.println(p1.giveName());
 
@@ -78,8 +106,6 @@ public class NBodies extends JPanel implements ActionListener{
 		jf.add(t);
 		jf.setVisible(true);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
 
 	}
 
