@@ -34,6 +34,30 @@ public class NBodies extends JPanel implements ActionListener{
 			next=null;
 		}
 	}
+	public class LinkedList<E>{
+		private class Node<E>{
+			E data;
+			Node<E>next;
+			public node(E value){
+				data=value;
+				next=null;
+			}
+		}
+
+		Node<E> head;
+		int size;
+		public LinkedList(){
+			head=null;
+			size=0;
+		}
+		public void add(E item){
+			if(head==null){
+				head = new Node<E>(item);
+			}else{
+				Node<E>prev = head;
+			}
+		}
+	}
 
 	private static class CelestBody{
 		private String name;
@@ -76,7 +100,7 @@ public class NBodies extends JPanel implements ActionListener{
 		repaint();
 	}
 	//stopped here @10:49 10/23 making file reader
-	public NbodyCreator(String fileName) throws IOException{
+	public void NbodyCreator(String fileName) throws IOException{
 		String fileInput= fileName;
 		content= new ArrayList<>();
 		try(BufferedReader read= new BufferedReader(new FileReader(fileInput))){
