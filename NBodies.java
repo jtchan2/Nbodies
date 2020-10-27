@@ -22,8 +22,8 @@ public class NBodies extends JPanel implements ActionListener{
 	private int xDirectVelocity;
 	private int yDirectVelocity;
 	private int bodySize;
-	private List<String[]> content;
-	private List<CelestBody> arrList;
+	private List<String[]> storage;
+	private List<CelestBody> eList;
 
 
 	private static class Node<E>{
@@ -32,30 +32,6 @@ public class NBodies extends JPanel implements ActionListener{
 		public Node(E value){
 			data=value;
 			next=null;
-		}
-	}
-	public class LinkedList<E>{
-		private class Node<E>{
-			E data;
-			Node<E>next;
-			public node(E value){
-				data=value;
-				next=null;
-			}
-		}
-
-		Node<E> head;
-		int size;
-		public LinkedList(){
-			head=null;
-			size=0;
-		}
-		public void add(E item){
-			if(head==null){
-				head = new Node<E>(item);
-			}else{
-				Node<E>prev = head;
-			}
 		}
 	}
 
@@ -80,49 +56,84 @@ public class NBodies extends JPanel implements ActionListener{
 		public String giveName(){
 			return this.name;
 		}
+		public int getXPos(){
+			return this.xCoordinate;
+		}
+		public int getYPos(){
+			return this.yCoordinate;
+		}
+		public int bodySize(){
+			return this.bodySize;
+		}
 	}
-	//
+	
 	Timer tm= new Timer(5, this);
-	int x=0, velx=2;
+	int x=384, velx=2;
+	int y=348, vely=12;
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.RED);
-		g.fillOval(x,100,50,50);
+		g.fillOval(x,y,20,20);
 		tm.start();
 	}
 
 	public void actionPerformed(ActionEvent e){
-		if(x<0||x>718){
+		if(x<0||x>748){
 			velx= -velx;
 		}
+		if(y<0||y>748){
+			vely= -vely;
+		}
 		x=x+velx;
+		y=y+vely;
 		repaint();
 	}
 	//stopped here @10:49 10/23 making file reader
-	public void NbodyCreator(String fileName) throws IOException{
-		String fileInput= fileName;
-		content= new ArrayList<>();
-		try(BufferedReader read= new BufferedReader(new FileReader(fileInput))){
+	// @10/26/2020 made working file reader
 
+	public void NBodiesCreator(String fileName) throws IOException{
+
+		String fileInput= fileName;
+		storage = new ArrayList<String[]>();
+		try{
+			BufferedReader read= new BufferedReader(new FileReader(fileInput));
 			String line="";
-			while(line=read.readLine()){
-				content.add(line.split(","));
+			while((line=read.readLine())!=null){
+				storage.add(line.split(","));
 			}
-		} catch(Exception e){
-			System.out.println("Error no file found");
+		}catch(Exception ex){
+			System.out.println("File Cannot be Found");
 		}
+		System.out.println(storage.get(0)[0]);
+		if(storage.get(0)[0].equals("ArrayList")){
+			System.out.println("Creating ArrayList");
+			eList= new ArrayList<CelestBody>();
+		}
+		if(storage.get(0)[0].equals("LinkedList")){
+			System.out.println("Creating LinkedList");
+			eList=new LinkedList1<CelestBody>();
+		}
+		//for(int i=2; i<storage.size(); i++){
+
+		//}
 
 	}
+	
 
 
 
-	public static void main(String[] args){
-		String fileName= "nbody_input.text";
+	public static void main(String[] args) throws IOException{
 		CelestBody p1= new CelestBody("Earth", 20000, 20, 5,16, 3000, 20000);
+
 		System.out.println(p1.giveName());
 
+		String fileName="nbody_input.txt";
+
 		NBodies t= new NBodies();
+
+		t.NBodiesCreator(fileName);
+		
 		JFrame jf= new JFrame();
 
 		jf.setTitle("Canvas");
