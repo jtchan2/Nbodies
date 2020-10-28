@@ -16,14 +16,15 @@ import javax.swing.Timer;
 
 public class NBodies extends JPanel implements ActionListener{
 	private String name;
-	private int mass;
+	private double mass;
 	private int xCoordinate;
 	private int yCoordinate;
-	private int xDirectVelocity;
-	private int yDirectVelocity;
+	private double xDirectVelocity;
+	private double yDirectVelocity;
 	private int bodySize;
 	private List<String[]> storage;
 	private List<CelestBody> eList;
+	private double scale;
 
 
 	private static class Node<E>{
@@ -35,37 +36,7 @@ public class NBodies extends JPanel implements ActionListener{
 		}
 	}
 
-	private static class CelestBody{
-		private String name;
-		private int mass;
-		private int xCoordinate;
-		private int yCoordinate;
-		private int xDirectVelocity;
-		private int yDirectVelocity;
-		private int bodySize;
-
-		public CelestBody(String name, int mass, int xCoordinate, int yCoordinate, int xDirectVelocity, int yDirectVelocity, int size){
-			this.name=name;
-			this.mass=mass;
-			this.xCoordinate=xCoordinate;
-			this.yCoordinate=yCoordinate;
-			this.xDirectVelocity=xDirectVelocity;
-			this.yDirectVelocity=yDirectVelocity;
-			this.bodySize=bodySize;
-		}
-		public String giveName(){
-			return this.name;
-		}
-		public int getXPos(){
-			return this.xCoordinate;
-		}
-		public int getYPos(){
-			return this.yCoordinate;
-		}
-		public int bodySize(){
-			return this.bodySize;
-		}
-	}
+	
 	
 	Timer tm= new Timer(5, this);
 	int x=384, velx=2;
@@ -74,7 +45,15 @@ public class NBodies extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.RED);
+		//for(int i=0;i<eList.size();i++){
+			//CelestBody holder=eList.get(i);
+			//System.out.println(holder.getXPos());
+			//g.setColor(Color.RED);
+			//g.fillOval(holder.getXPos(),holder.getYPos(),holder.bodySize(),holder.bodySize());
+			//System.out.println("Hello");
+		//}
 		g.fillOval(x,y,20,20);
+		
 		tm.start();
 	}
 
@@ -106,6 +85,7 @@ public class NBodies extends JPanel implements ActionListener{
 			System.out.println("File Cannot be Found");
 		}
 		System.out.println(storage.get(0)[0]);
+
 		if(storage.get(0)[0].equals("ArrayList")){
 			System.out.println("Creating ArrayList");
 			eList= new ArrayList<CelestBody>();
@@ -114,9 +94,22 @@ public class NBodies extends JPanel implements ActionListener{
 			System.out.println("Creating LinkedList");
 			eList=new LinkedList1<CelestBody>();
 		}
-		//for(int i=2; i<storage.size(); i++){
 
-		//}
+		scale=Double.parseDouble(storage.get(1)[0]);
+
+
+		for(int i=2; i<storage.size(); i++){
+			name=storage.get(i)[0];
+			mass= Double.parseDouble(storage.get(i)[1]);
+			xCoordinate=Integer.parseInt(storage.get(i)[2]);
+			yCoordinate=Integer.parseInt(storage.get(i)[3]);
+			xDirectVelocity=Double.parseDouble(storage.get(i)[4]);
+			yDirectVelocity=Double.parseDouble(storage.get(i)[5]);
+			bodySize=Integer.parseInt(storage.get(i)[6]);
+			CelestBody planet= new CelestBody(name,mass,xCoordinate,yCoordinate,xDirectVelocity,yDirectVelocity,bodySize);
+			eList.add(planet);
+		}
+		System.out.println(eList.size());
 
 	}
 	
@@ -124,7 +117,11 @@ public class NBodies extends JPanel implements ActionListener{
 
 
 	public static void main(String[] args) throws IOException{
-		CelestBody p1= new CelestBody("Earth", 20000, 20, 5,16, 3000, 20000);
+		CelestBody p1= new CelestBody("Earth", 20000.0, 20, 5, 16.0, 3000.0, 20000);
+		System.out.println(p1.getXVelocity());
+		System.out.println(p1.getXPos());
+		p1.setXVelocity(20.0);
+		System.out.println(p1.getXVelocity());
 
 		System.out.println(p1.giveName());
 
@@ -133,7 +130,7 @@ public class NBodies extends JPanel implements ActionListener{
 		NBodies t= new NBodies();
 
 		t.NBodiesCreator(fileName);
-		
+
 		JFrame jf= new JFrame();
 
 		jf.setTitle("Canvas");
