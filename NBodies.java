@@ -52,6 +52,7 @@ public class NBodies extends JPanel implements ActionListener{
 			//g.fillOval(holder.getXPos(),holder.getYPos(),holder.bodySize(),holder.bodySize());
 			//System.out.println("Hello");
 		//}
+		//planets from eList sin't being printed onto Jframe yet get functions do return values
 		g.fillOval(x,y,20,20);
 		
 		tm.start();
