@@ -45,17 +45,21 @@ public class NBodies extends JPanel implements ActionListener{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.setColor(Color.RED);
-		//for(int i=0;i<eList.size();i++){
-			//CelestBody holder=eList.get(i);
+		for(int i=0;i<eList.size();i++){
+			CelestBody holder=eList.get(i);
 			//System.out.println(holder.getXPos());
-			//g.setColor(Color.RED);
-			//g.fillOval(holder.getXPos(),holder.getYPos(),holder.bodySize(),holder.bodySize());
-			//System.out.println("Hello");
-		//}
+			g.setColor(Color.RED);
+			g.fillOval(holder.getXPos(),holder.getYPos(),holder.bodySize(),holder.bodySize());
+			//System.out.println(holder.getXPos());
+			//System.out.println(holder.getYPos());
+			//System.out.println(holder.bodySize());
+
+		}
 		//planets from eList sin't being printed onto Jframe yet get functions do return values
-		g.fillOval(x,y,20,20);
+		//g.fillOval(x,y,20,20);
 		
-		tm.start();
+		
+		//tm.start();
 	}
 
 	public void actionPerformed(ActionEvent e){
