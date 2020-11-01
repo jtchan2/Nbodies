@@ -15,7 +15,7 @@ public class CelestBody{
 		this.yCoordinate=yCoordinate;
 		this.xDirectVelocity=xDirectVelocity;
 		this.yDirectVelocity=yDirectVelocity;
-		this.bodySize=bodySize;
+		this.bodySize=size;
 	}
 	public String giveName(){
 		return this.name;
@@ -29,11 +29,31 @@ public class CelestBody{
 	public int bodySize(){
 		return this.bodySize;
 	}
+
+	public double getMass(){
+		return	this.mass;
+	}
+
 	public double getXVelocity(){
 		return this.xDirectVelocity;
 
 	}
-	public void setXVelocity(double velocity){
-		this.xDirectVelocity=velocity;
+	public double getYVelocity(){
+		return this.yDirectVelocity;
 	}
+
+	public void setXCoordinate(int position){
+		this.xCoordinate=position;
+	}
+
+	public void setYCoordinate(int position){
+		this.yCoordinate=position;
+	}
+
+	//public void setXVelocity(double velocity){
+	//	this.xDirectVelocity=velocity;
+	//}
+	//public void setYVelocity(double	velocity){
+	//	this.yDirectVelocity=velocity;
+	//}
 }

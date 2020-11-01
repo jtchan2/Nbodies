@@ -25,6 +25,8 @@ public class NBodies extends JPanel implements ActionListener{
 	private List<String[]> storage;
 	private List<CelestBody> eList;
 	private double scale;
+	private double xforce;
+	private	double yforce;
 
 
 	private static class Node<E>{
@@ -60,6 +62,10 @@ public class NBodies extends JPanel implements ActionListener{
 		
 		
 		//tm.start();
+	}
+
+	public void force(){
+		System.out.println("Hello");
 	}
 
 	public void actionPerformed(ActionEvent e){
@@ -125,7 +131,6 @@ public class NBodies extends JPanel implements ActionListener{
 		CelestBody p1= new CelestBody("Earth", 20000.0, 20, 5, 16.0, 3000.0, 20000);
 		System.out.println(p1.getXVelocity());
 		System.out.println(p1.getXPos());
-		p1.setXVelocity(20.0);
 		System.out.println(p1.getXVelocity());
 
 		System.out.println(p1.giveName());
