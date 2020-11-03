@@ -43,17 +43,17 @@ public class CelestBody{
 	}
 
 	public void setXCoordinate(int position){
-		this.xCoordinate=position;
+		this.xCoordinate+=position;
 	}
 
 	public void setYCoordinate(int position){
-		this.yCoordinate=position;
+		this.yCoordinate+=position;
 	}
 
-	//public void setXVelocity(double velocity){
-	//	this.xDirectVelocity=velocity;
-	//}
-	//public void setYVelocity(double	velocity){
-	//	this.yDirectVelocity=velocity;
-	//}
+	public void setXVelocity(double velocity){
+		this.xDirectVelocity+=velocity;
+	}
+	public void setYVelocity(double	velocity){
+		this.yDirectVelocity+=velocity;
+	}
 }
