@@ -27,6 +27,7 @@ public class NBodies extends JPanel implements ActionListener{
 	private double scale;
 	private double xforce;
 	private	double yforce;
+	private double gravity=6.67*Math.pow(10,-11);
 
 
 	private static class Node<E>{
@@ -40,9 +41,7 @@ public class NBodies extends JPanel implements ActionListener{
 
 	
 	
-	Timer tm= new Timer(5, this);
-	int x=384, velx=2;
-	int y=348, vely=12;
+	Timer tm= new Timer(500, this);
 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -58,25 +57,79 @@ public class NBodies extends JPanel implements ActionListener{
 
 		}
 		//planets from eList sin't being printed onto Jframe yet get functions do return values
-		//g.fillOval(x,y,20,20);
 		
 		
-		//tm.start();
+		
+		tm.start();
 	}
 
-	public void force(){
-		System.out.println("Hello");
+	public double findXDistance(CelestBody b1,CelestBody b2){
+		return (b1.getXPos()-b2.getXPos())*scale;
+	}
+
+	public double findYDistance(CelestBody b1,CelestBody b2){
+		return (b1.getYPos()-b2.getYPos())*scale;
+	}
+	public double findZDistance(double distance1, double distance2){
+		double zDistance=Math.pow(distance1,2)+Math.pow(distance2,2);
+		zDistance=Math.sqrt(zDistance);
+		return zDistance;
+
 	}
 
 	public void actionPerformed(ActionEvent e){
-		if(x<0||x>748){
-			velx= -velx;
+		
+		for(int i=0; i<eList.size(); i++){
+			double xVelocityC=0.0;
+			double yVelocityC=0.0;
+			CelestBody planet1= eList.get(i);
+			for(int m=0; m<eList.size(); m++){
+				if(i!=m){
+					CelestBody planet2= eList.get(m);
+					double xDist= findXDistance(planet1,planet2);
+					double yDist= findYDistance(planet1,planet2);
+					//try using hypothenus instead of xdist and ydist
+					double zDist= findZDistance(xDist,yDist);
+					double xForce= gravity*((planet1.getMass()*planet2.getMass())/Math.pow(zDist,2));
+					double yForce= gravity*((planet1.getMass()*planet2.getMass())/Math.pow(zDist,2));
+
+					if(planet1.getXPos()-planet2.getXPos()==0){
+						xForce=0.0;
+					}
+					if(planet1.getXPos()<planet2.getXPos()){
+						xVelocityC-= xForce;
+					}else{
+						xVelocityC+= xForce;
+					}
+
+					if(planet1.getYPos()-planet2.getYPos()==0){
+						yForce=0.0;
+					}
+
+					if(planet1.getYPos()<planet2.getYPos()){
+						yVelocityC-=yForce;
+					}else{
+						yVelocityC+=yForce;
+					}
+
+				}
+			}
+			planet1.setXVelocity(planet1.getXVelocity()+(xVelocityC/scale)/planet1.getMass());
+			planet1.setYVelocity(planet1.getYVelocity()+(yVelocityC/scale)/planet1.getMass());
+
+			System.out.println("Origional X coordinate:");
+			System.out.println(planet1.getXPos());
+			planet1.setXCoordinate(planet1.getXPos()+(int)planet1.getXVelocity());
+			System.out.println("X place Changes to:");
+			System.out.println(planet1.getXPos());
+
+			System.out.println("Origional Y Coordinate:");
+			System.out.println(planet1.getYPos());
+			planet1.setYCoordinate(planet1.getYPos()+(int)planet1.getYVelocity());
+			System.out.println("New Y Coordinate:");
+			System.out.println(planet1.getYPos());
+
 		}
-		if(y<0||y>748){
-			vely= -vely;
-		}
-		x=x+velx;
-		y=y+vely;
 		repaint();
 	}
 	//stopped here @10:49 10/23 making file reader
@@ -120,7 +173,6 @@ public class NBodies extends JPanel implements ActionListener{
 			CelestBody planet= new CelestBody(name,mass,xCoordinate,yCoordinate,xDirectVelocity,yDirectVelocity,bodySize);
 			eList.add(planet);
 		}
-		System.out.println(eList.size());
 
 	}
 	
@@ -128,12 +180,8 @@ public class NBodies extends JPanel implements ActionListener{
 
 
 	public static void main(String[] args) throws IOException{
-		CelestBody p1= new CelestBody("Earth", 20000.0, 20, 5, 16.0, 3000.0, 20000);
-		System.out.println(p1.getXVelocity());
-		System.out.println(p1.getXPos());
-		System.out.println(p1.getXVelocity());
-
-		System.out.println(p1.giveName());
+		//int number=(int)p1.getXVelocity()+25;
+		//System.out.println((int)p1.getXVelocity()+25);
 
 		String fileName="nbody_input.txt";
 
