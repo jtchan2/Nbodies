@@ -30,18 +30,8 @@ public class NBodies extends JPanel implements ActionListener{
 	//Gravity is the universal gravity constant
 	private double gravity=6.67*Math.pow(10,-11);
 
-
-	private static class Node<E>{
-		E data;
-		Node<E> next;
-		public Node(E value){
-			data=value;
-			next=null;
-		}
-	}
-
 	
-	//timer that is used to update/ aniamte planets, set o 500 because if at 5, planets immidiately dispappear after 1 second where 500 you can see 1 planet for 1 to 2 frames
+	//timer used to repaint planets onto canvas
 	Timer tm= new Timer(0, this);
 
 	//this method bascially initializes the shapes onto the Jframe
@@ -50,15 +40,12 @@ public class NBodies extends JPanel implements ActionListener{
 		g.setColor(Color.RED);
 		for(int i=0;i<eList.size();i++){
 			CelestBody holder=eList.get(i);
-			//System.out.println(holder.getXPos());
 			g.setColor(Color.RED);
 			g.fillOval((int)holder.getXPos(),(int)holder.getYPos(),holder.bodySize(),holder.bodySize());
-			//System.out.println(holder.getXPos());
-			//System.out.println(holder.getYPos());
-			//System.out.println(holder.bodySize());
+			
 
 		}
-		//planets from eList sin't being printed onto Jframe yet get functions do return values
+		//
 		
 		
 		
@@ -87,7 +74,7 @@ public class NBodies extends JPanel implements ActionListener{
 		//for loop used to get gravitation/ force exprienced on each planet to other on the frame
 		for(int i=0; i<eList.size(); i++){
 
-			//this will be holders for velocity after calculated
+			//this will be holders for velocity after calculated, C standes for changes
 			double xVelocityC=0.0;
 			double yVelocityC=0.0;
 			CelestBody planet1= eList.get(i);
@@ -104,6 +91,7 @@ public class NBodies extends JPanel implements ActionListener{
 					double yForce= gravity*((planet1.getMass()*planet2.getMass())/Math.pow(yDist,2));
 					//using xDist, yDist or zDist yields same results
 
+					//checks 
 					if(planet1.getXPos()-planet2.getXPos()==0){
 						xForce=0.0;
 					}
@@ -156,9 +144,9 @@ public class NBodies extends JPanel implements ActionListener{
 		}
 		repaint();
 	}
-	//stopped here @10:49 10/23 making file reader
-	// @10/26/2020 made working file reader
 
+
+	//
 	public void NBodiesCreator(String fileName) throws IOException{
 
 		String fileInput= fileName;
@@ -206,8 +194,6 @@ public class NBodies extends JPanel implements ActionListener{
 
 
 	public static void main(String[] args) throws IOException{
-		//int number=(int)p1.getXVelocity()+25;
-		//System.out.println((int)p1.getXVelocity()+25);
 
 		String fileName="nbody_input.txt";
 
