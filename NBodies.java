@@ -17,8 +17,8 @@ import javax.swing.Timer;
 public class NBodies extends JPanel implements ActionListener{
 	private String name;
 	private double mass;
-	private int xCoordinate;
-	private int yCoordinate;
+	private double xCoordinate;
+	private double yCoordinate;
 	private double xDirectVelocity;
 	private double yDirectVelocity;
 	private int bodySize;
@@ -42,7 +42,7 @@ public class NBodies extends JPanel implements ActionListener{
 
 	
 	//timer that is used to update/ aniamte planets, set o 500 because if at 5, planets immidiately dispappear after 1 second where 500 you can see 1 planet for 1 to 2 frames
-	Timer tm= new Timer(50, this);
+	Timer tm= new Timer(0, this);
 
 	//this method bascially initializes the shapes onto the Jframe
 	public void paintComponent(Graphics g){
@@ -52,7 +52,7 @@ public class NBodies extends JPanel implements ActionListener{
 			CelestBody holder=eList.get(i);
 			//System.out.println(holder.getXPos());
 			g.setColor(Color.RED);
-			g.fillOval(holder.getXPos(),holder.getYPos(),holder.bodySize(),holder.bodySize());
+			g.fillOval((int)holder.getXPos(),(int)holder.getYPos(),holder.bodySize(),holder.bodySize());
 			//System.out.println(holder.getXPos());
 			//System.out.println(holder.getYPos());
 			//System.out.println(holder.bodySize());
@@ -126,9 +126,11 @@ public class NBodies extends JPanel implements ActionListener{
 				}
 			}
 			//planet1.setXVelocity cannot be removed becuase it won't update without it
+			System.out.println(planet1.getXVelocity());
 			planet1.setXVelocity(planet1.getXVelocity()+(xVelocityC/scale)/planet1.getMass());
 
 			//Same case for setYVelocity
+			System.out.println(planet1.getYVelocity());
 			planet1.setYVelocity(planet1.getYVelocity()+(yVelocityC/scale)/planet1.getMass());
 
 
@@ -136,7 +138,8 @@ public class NBodies extends JPanel implements ActionListener{
 			System.out.println(planet1.getXPos());
 
 			//the planet1.getXPos()+ can be removed
-			planet1.setXCoordinate((int)planet1.getXVelocity());
+			
+			planet1.setXCoordinate(planet1.getXPos()+ planet1.getXVelocity());
 			System.out.println("X place Changes to:");
 			System.out.println(planet1.getXPos());
 
@@ -145,7 +148,8 @@ public class NBodies extends JPanel implements ActionListener{
 
 
 			//the planet1.getYPos()+ can be removed
-			planet1.setYCoordinate((int)planet1.getYVelocity());
+			
+			planet1.setYCoordinate(planet1.getYPos()+ planet1.getYVelocity());
 			System.out.println("New Y Coordinate:");
 			System.out.println(planet1.getYPos());
 

@@ -3,12 +3,12 @@ import java.util.*;
 public class CelestBody{
 	private String name;
 	private double mass;
-	private int xCoordinate;
-	private int yCoordinate;
+	private double xCoordinate;
+	private double yCoordinate;
 	private double xDirectVelocity;
 	private double yDirectVelocity;
 	private int bodySize;
-	public CelestBody(String name, double mass, int xCoordinate, int yCoordinate, double xDirectVelocity, double yDirectVelocity, int size){
+	public CelestBody(String name, double mass, double xCoordinate, double yCoordinate, double xDirectVelocity, double yDirectVelocity, int size){
 		this.name=name;
 		this.mass=mass;
 		this.xCoordinate=xCoordinate;
@@ -20,10 +20,10 @@ public class CelestBody{
 	public String giveName(){
 		return this.name;
 	}
-	public int getXPos(){
+	public double getXPos(){
 		return this.xCoordinate;
 	}
-	public int getYPos(){
+	public double getYPos(){
 		return this.yCoordinate;
 	}
 	public int bodySize(){
@@ -42,18 +42,18 @@ public class CelestBody{
 		return this.yDirectVelocity;
 	}
 
-	public void setXCoordinate(int position){
-		this.xCoordinate+=position;
+	public void setXCoordinate(double position){
+		this.xCoordinate=position;
 	}
 
-	public void setYCoordinate(int position){
-		this.yCoordinate+=position;
+	public void setYCoordinate(double position){
+		this.yCoordinate=position;
 	}
 
 	public void setXVelocity(double velocity){
-		this.xDirectVelocity+=velocity;
+		this.xDirectVelocity=velocity;
 	}
 	public void setYVelocity(double	velocity){
-		this.yDirectVelocity+=velocity;
+		this.yDirectVelocity=velocity;
 	}
 }
