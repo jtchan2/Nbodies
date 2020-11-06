@@ -61,13 +61,8 @@ public class NBodies extends JPanel implements ActionListener{
 		return (b1.getYPos()-b2.getYPos())*scale;
 	}
 
-	//find hypothenus distance to be used in Netwen's gravitation equation since that is correct radius distance
-	public double findZDistance(double distance1, double distance2){
-		double zDistance=Math.pow(distance1,2)+Math.pow(distance2,2);
-		zDistance=Math.sqrt(zDistance);
-		return zDistance;
-
-	}
+	
+	
 
 	//this method basically updates each x and y coordinates of planet on Jframe by doing Newton's Gravity equation
 	public void actionPerformed(ActionEvent e){
@@ -84,14 +79,14 @@ public class NBodies extends JPanel implements ActionListener{
 					double xDist= findXDistance(planet1,planet2);
 					double yDist= findYDistance(planet1,planet2);
 					//try using hypothenus instead of xdist and ydist
-					double zDist= findZDistance(xDist,yDist);
+					
 
 					//Does the math for x force and y force but will be same since hypotnuses distacne will be used for radius
 					double xForce= gravity*((planet1.getMass()*planet2.getMass())/Math.pow(xDist,2));
 					double yForce= gravity*((planet1.getMass()*planet2.getMass())/Math.pow(yDist,2));
 					//using xDist, yDist or zDist yields same results
 
-					//checks 
+					//checks for divived by 0 possiblity 
 					if(planet1.getXPos()-planet2.getXPos()==0){
 						xForce=0.0;
 					}
